@@ -60,38 +60,38 @@ int main ()
         case 2:
         {
             int n;
-            cout << "Ingrese un numero impar para el tamaño de la matriz: ";
-            cin >> n;
-
-            // Verificar si el tamaño ingresado es impar, si no, pedir al usuario que ingrese nuevamente
-            while (n % 2 == 0) {
-                cout << "El tamaño de la matriz debe ser un numero impar. Ingrese nuevamente: ";
+                cout << "Ingrese un numero impar para el tamaño de la matriz: ";
                 cin >> n;
-            }
 
-            // Generar la matriz
-            int matriz = generarMatriz(n);
+                // Verificar si el tamaño ingresado es impar, si no, pedir al usuario que ingrese nuevamente
+                while (n % 2 == 0) {
+                    cout << "El tamaño de la matriz debe ser un numero impar. Ingrese nuevamente: ";
+                    cin >> n;
+                }
 
-            // Imprimir la matriz original
-            cout << "Matriz original:" << endl;
-            imprimirMatriz(matriz, n);
+                // Generar la matriz
+                int **matriz = generarMatriz(n);
 
-            // Rotar la matriz 90 grados en sentido antihorario
-            int matriz_rotada90 = rotarMatrizAntihorario90(matriz, n);
-            cout << "\nMatriz rotada 90 grados en sentido antihorario:" << endl;
-            imprimirMatriz(matriz_rotada90, n);
+                // Imprimir la matriz original
+                cout << "Matriz original:" << endl;
+                imprimirMatriz(matriz, n);
 
-            // Rotar la matriz 180 grados en sentido antihorario
-            int matriz_rotada180 = rotarMatrizAntihorario180(matriz, n);
-            cout << "\nMatriz rotada 180 grados en sentido antihorario:" << endl;
-            imprimirMatriz(matriz_rotada180, n);
+                // Rotar la matriz 90 grados en sentido antihorario
+                int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, n);
+                cout << "\nMatriz rotada 90 grados en sentido antihorario:" << endl;
+                imprimirMatriz(matriz_rotada90, n);
 
-            // Rotar la matriz 270 grados en sentido antihorario
-            int matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
-            cout << "\nMatriz rotada 270 grados en sentido antihorario:" << endl;
-            imprimirMatriz(matriz_rotada270, n);
+                // Rotar la matriz 180 grados en sentido antihorario
+                int **matriz_rotada180 = rotarMatrizAntihorario180(matriz, n);
+                cout << "\nMatriz rotada 180 grados en sentido antihorario:" << endl;
+                imprimirMatriz(matriz_rotada180, n);
 
-            // Liberar la memoria
+                // Rotar la matriz 270 grados en sentido antihorario
+                int **matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
+                cout << "\nMatriz rotada 270 grados en sentido antihorario:" << endl;
+                imprimirMatriz(matriz_rotada270, n);
+
+                // Liberar la memoria
             liberarMemoria(matriz, n);
             liberarMemoria(matriz_rotada90, n);
             liberarMemoria(matriz_rotada180, n);
@@ -101,6 +101,31 @@ int main ()
         }
         case 3:
         {
+            int cantidad_cerraduras;
+            cout << "Ingrese la cantidad de cerraduras que desea configurar: ";
+            cin >> cantidad_cerraduras;
+
+            for (int i = 0; i < cantidad_cerraduras; ++i) {
+                int tam;
+                cout << "Ingrese el tamaño impar para la cerradura " << i + 1 << ": ";
+                cin >> tam;
+                while (tam % 2 == 0) {
+                    cout << "El tamaño debe ser impar. Ingrese nuevamente: ";
+                    cin >> tam;
+                }
+
+                // Generar la cerradura
+                int **cerradura = generarMatriz(tam);
+
+                // Imprimir la cerradura
+                cout << "Cerradura " << i + 1 << ":" << endl;
+                imprimirMatriz(cerradura, tam);
+
+                // Liberar la memoria
+                liberarMemoria(cerradura, tam);
+
+                cout << endl; // Imprimir una línea en blanco entre cada cerradura
+            }
 
 
             break;
@@ -179,9 +204,9 @@ void liberarMemoria(int** MATRIZ, int n) {
 }
 
 // Función para rotar la matriz 90 grados en sentido antihorario
-int rotarMatrizAntihorario90(int MATRIZ, int n) {
+int** rotarMatrizAntihorario90(int** MATRIZ, int n) {
     // Crear una nueva matriz para almacenar la matriz rotada
-    int matriz_rotada;
+    int **matriz_rotada;
     matriz_rotada = new int*[n];
     for (int i = 0; i < n; ++i) {
         matriz_rotada[i] = new int[n];
@@ -199,15 +224,15 @@ int rotarMatrizAntihorario90(int MATRIZ, int n) {
 
 
 // Función para rotar la matriz 180 grados en sentido antihorario
-int rotarMatrizAntihorario180(int MATRIZ, int n) {
-    int matriz_rotada;
-    matriz_rotada = new int[n];
+int** rotarMatrizAntihorario180(int** MATRIZ, int n) {
+    int **matriz_rotada;
+    matriz_rotada = new int*[n];
     for (int i = 0; i < n; ++i) {
         matriz_rotada[i] = new int[n];
     }
 
     // Rotar la matriz 180 grados es equivalente a rotarla 90 grados dos veces
-    int matriz_temporal = rotarMatrizAntihorario90(MATRIZ, n);
+    int **matriz_temporal = rotarMatrizAntihorario90(MATRIZ, n);
     matriz_rotada = rotarMatrizAntihorario90(matriz_temporal, n);
     liberarMemoria(matriz_temporal, n);
 
@@ -215,9 +240,9 @@ int rotarMatrizAntihorario180(int MATRIZ, int n) {
 }
 
 // Función para rotar la matriz 270 grados en sentido antihorario
-int rotarMatrizAntihorario270(int MATRIZ, int n) {
-    int matriz_rotada;
-    matriz_rotada = new int[n];
+int** rotarMatrizAntihorario270(int** MATRIZ, int n) {
+    int **matriz_rotada;
+    matriz_rotada = new int*[n];
     for (int i = 0; i < n; ++i) {
         matriz_rotada[i] = new int[n];
     }
@@ -234,6 +259,8 @@ int rotarMatrizAntihorario270(int MATRIZ, int n) {
 
     return matriz_rotada;
 }
+
+
 
 void validar() {
     int fila, columna;
