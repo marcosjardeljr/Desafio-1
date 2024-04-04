@@ -13,10 +13,11 @@ using namespace std;
 int** generarMatriz(int);
 void imprimirMatriz(int**, int );
 void liberarMemoria(int**, int);
-void validar();
 int** rotarMatrizAntihorario90(int** , int );
 int** rotarMatrizAntihorario180(int** , int );
 int** rotarMatrizAntihorario270(int** , int );
+void validarReglaK(int *datos, int cantidad);
+void generar_clave_x(int *datos, int cantidad);
 
 int main ()
 {
@@ -133,13 +134,83 @@ int main ()
         }
         case 4:
         {
-            validar();
+            int cantidad;
+            cout << "Ingrese la cantidad de datos: ";
+            cin >> cantidad;
+            // Validar que se ingresen al menos 3 datos
+            while (cantidad < 3) {
+                cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
+                cin >> cantidad;
+            }
 
-            break;
+            // Crear un arreglo dinámico para almacenar los datos
+            int *datos = new int[cantidad];
+            // Pedir al usuario que ingrese los datos
+            cout << "Ingrese los datos:" << endl;
+            cout << "Dato 1: ";
+            cin >> datos[0];
+            cout << "Dato 2: ";
+            cin >> datos[1];
+
+            // Validar que los primeros dos datos sean positivos
+            while (datos[0] <= 0 || datos[1] <= 0) {
+                cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
+                cin >> datos[0];
+                cout << "Ingrese nuevamente el dato 2: ";
+                cin >> datos[1];
+            }
+
+            // Pedir al usuario que ingrese el resto de los datos
+            for (int i = 2; i < cantidad; ++i) {
+                cout << "Dato " << i + 1 << ": ";
+                cin >> datos[i];
+            }
+
+
+
+            // Liberar la memoria del arreglo dinámico
+            delete[] datos;
+
+            return 0;
             }
         case 5:
         {
+                int cantidad;
+                cout << "Ingrese la cantidad de datos: ";
+                cin >> cantidad;
+                // Validar que se ingresen al menos 3 datos
+                while (cantidad < 3) {
+                    cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
+                    cin >> cantidad;
+                }
 
+                // Crear un arreglo dinámico para almacenar los datos
+                int *datos = new int[cantidad];
+                // Pedir al usuario que ingrese los datos
+                cout << "Ingrese los datos:" << endl;
+                cout << "Dato 1: ";
+                cin >> datos[0];
+                cout << "Dato 2: ";
+                cin >> datos[1];
+
+                // Validar que los primeros dos datos sean positivos
+                while (datos[0] <= 0 || datos[1] <= 0) {
+                    cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
+                    cin >> datos[0];
+                    cout << "Ingrese nuevamente el dato 2: ";
+                    cin >> datos[1];
+                }
+
+                // Pedir al usuario que ingrese el resto de los datos
+                for (int i = 2; i < cantidad; ++i) {
+                    cout << "Dato " << i + 1 << ": ";
+                    cin >> datos[i];
+                }
+
+                generar_clave_x(datos, cantidad);
+
+                // Liberar la memoria del arreglo dinámico
+                delete[] datos;
 
 
             break;
@@ -262,68 +333,51 @@ int** rotarMatrizAntihorario270(int** MATRIZ, int n) {
 
 
 
-void validar() {
-    int fila, columna;
-    int fila_columna[2]; // Arreglo para almacenar los valores de fila y columna
-    int validacion[100]; // Arreglo para almacenar los valores de validación de k
-    int num_valores_k = 0; // Contador de valores de k
-
-
-    // Validar si fila y columna son positivos
-    do {
-        cout << "Ingrese un valor para fila: ";
-        cin >> fila;
-        if (fila <= 0)
-            cout << "El valor de fila debe ser positivo Inténtelo nuevamente." << endl;
-    } while (fila <= 0);
-
-    do {
-        cout << "Ingrese un valor para columna: ";
-        cin >> columna;
-        if (columna <= 0)
-            cout << "El valor de columna debe ser positivo Inténtelo nuevamente." << endl;
-    } while (columna <= 0);
-
-
-    fila_columna[0] = fila;
-    fila_columna[1] = columna;
-
-    char respuesta;
-    do {
-        int k;
-        do {
-            cout << "Ingrese un valor para k (1, -1, 0): ";
-            cin >> k;
-
-            // Validar el valor de k
-            if (k != 1 && k != -1 && k != 0) {
-                cout << "El valor de k debe ser 1, -1 o 0." << endl;
-                continue;
-            }
-        } while (k != 1 && k != -1 && k != 0);
-
-        // Agregar el valor de k al arreglo de validación
-        validacion[num_valores_k++] = k;
-
-        cout << "¿Desea ingresar otro valor para k? (y/n): ";
-        cin >> respuesta;
-    } while (respuesta == 'y' || respuesta == 'Y');
-
-
-    // Mostrar los arreglos finales
-    cout << "Valores de fila y columna: ";
-    for (int i = 0; i < 2; ++i) {
-        cout << fila_columna[i] << " ";
+void validarReglaK(int *datos, int cantidad) {
+    // Verificar que las primeras dos posiciones sean positivas
+    if (datos[0] <= 0 || datos[1] <= 0) {
+        cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
+        cin >> datos[0];
+        cout << "Ingrese nuevamente el dato 2: ";
+        cin >> datos[1];
+        return;
     }
-    cout << endl;
-
-    cout << "Valores de validación de k: ";
-    for (int i = 0; i < num_valores_k; ++i) {
-        cout << validacion[i] << " ";
+    // Verificar que las demás posiciones sean -1, 0 o 1
+    for (int i = 2; i < cantidad; ++i) {
+        while (datos[i] != -1 && datos[i] != 0 && datos[i] != 1) {
+            cout << "Error: El dato ingresado en la posición " << i + 1 << " debe ser -1, 0 o 1." << endl;
+            cout << "Ingrese nuevamente el dato en la posición " << i + 1 << ": ";
+            cin >> datos[i];
+        }
     }
-    cout << endl;
+    // Si pasa todas las validaciones, imprimir éxito
+    cout << "Regla K validada correctamente." << endl;
 }
 
+void generar_clave_x(int *datos, int cantidad) {
+    // Llamamos a la función para validar los datos ingresados
+    validarReglaK(datos, cantidad);
+
+    // Extraer los primeros dos datos
+    int dato1 = datos[0];
+    int dato2 = datos[1];
+
+    // Determinar cuál es el mayor
+    int mayor;
+    if (dato1 >= dato2) {
+        mayor = dato1;
+    } else {
+        mayor = dato2;
+    }
+
+    // Verificar si el mayor es par o impar
+    if (mayor % 2 == 0) {
+        mayor += 1; // Si es par, sumar 1
+    }
+
+
+    cout << "la clave x es: " << mayor << endl;
+}
 
 
 
