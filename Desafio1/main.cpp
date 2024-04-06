@@ -175,6 +175,7 @@ int main ()
             }
         case 5:
         {
+
                 int cantidad;
                 cout << "Ingrese la cantidad de datos: ";
                 cin >> cantidad;
@@ -199,15 +200,18 @@ int main ()
                     cin >> datos[0];
                     cout << "Ingrese nuevamente el dato 2: ";
                     cin >> datos[1];
+
                 }
 
                 // Pedir al usuario que ingrese el resto de los datos
                 for (int i = 2; i < cantidad; ++i) {
                     cout << "Dato " << i + 1 << ": ";
                     cin >> datos[i];
+
                 }
 
                 generar_clave_x(datos, cantidad);
+
 
                 // Liberar la memoria del arreglo dinámico
                 delete[] datos;
@@ -375,8 +379,10 @@ void generar_clave_x(int *datos, int cantidad) {
         mayor += 1; // Si es par, sumar 1
     }
 
-
-    cout << "la clave x es: " << mayor << endl;
+    int **matriz = generarMatriz(mayor);
+    generarMatriz(mayor);
+    imprimirMatriz(matriz, mayor);
+    cout << "X(" << mayor << ")" << endl;
 }
 
 
