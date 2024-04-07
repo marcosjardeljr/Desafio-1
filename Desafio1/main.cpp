@@ -365,9 +365,10 @@ void generar_clave_x(int *datos, int cantidad) {
     // Extraer los primeros dos datos
     int dato1 = datos[0];
     int dato2 = datos[1];
+    int dato3 = datos[2];
 
     // Determinar cuál es el mayor
-    int mayor;
+    int mayor, mayor1;
     if (dato1 >= dato2) {
         mayor = dato1;
     } else {
@@ -378,11 +379,22 @@ void generar_clave_x(int *datos, int cantidad) {
     if (mayor % 2 == 0) {
         mayor += 1; // Si es par, sumar 1
     }
-
+    int valor_inicial, valor_rotado_90;
     int **matriz = generarMatriz(mayor);
-    generarMatriz(mayor);
+    int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, mayor);
+    valor_inicial = matriz[dato1-1][dato2-1];
+    valor_rotado_90 = matriz_rotada90[dato1-1][dato2-1];
+    if((valor_inicial > valor_rotado_90) && (dato3 == 1)){
+        mayor1 = mayor;
+    }
+    else
+        mayor1 = mayor+2;
+    cout << "Valor en la posicion inicial: " << valor_inicial << "------" << valor_rotado_90 << endl;
+    //generarMatriz(mayor);
     imprimirMatriz(matriz, mayor);
-    cout << "X(" << mayor << ")" << endl;
+    imprimirMatriz(matriz_rotada90, mayor);
+    //liberarMemoria(matriz, mayor);
+    cout << "X(" << mayor << "," << mayor1 <<")"  << endl;
 }
 
 
