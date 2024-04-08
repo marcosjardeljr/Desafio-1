@@ -183,52 +183,6 @@ int main ()
                 cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
                 cin >> cantidad;
             }
-
-            // Crear un arreglo dinámico para almacenar los datos
-            int *datos = new int[cantidad];
-            // Pedir al usuario que ingrese los datos
-            cout << "Ingrese los datos:" << endl;
-            cout << "Dato 1: ";
-            cin >> datos[0];
-            cout << "Dato 2: ";
-            cin >> datos[1];
-
-            // Validar que los primeros dos datos sean positivos
-            while (datos[0] <= 0 || datos[1] <= 0) {
-                cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
-                cin >> datos[0];
-                cout << "Ingrese nuevamente el dato 2: ";
-                cin >> datos[1];
-
-            }
-
-            // Pedir al usuario que ingrese el resto de los datos
-            for (int i = 2; i < cantidad; ++i) {
-                cout << "Dato " << i + 1 << ": ";
-                cin >> datos[i];
-
-            }
-
-            generar_clave_x(datos, cantidad);
-
-
-            // Liberar la memoria del arreglo dinámico
-            delete[] datos;
-
-
-            break;
-        }
-        case 6:
-        {
-
-            int cantidad;
-            cout << "Ingrese la cantidad de datos: ";
-            cin >> cantidad;
-            // Validar que se ingresen al menos 3 datos
-            while (cantidad < 3) {
-                cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
-                cin >> cantidad;
-            }
             // Crear un arreglo dinámico para almacenar los datos
             int *datos = new int[cantidad];
             // Pedir al usuario que ingrese los datos
@@ -425,7 +379,6 @@ int main ()
             break;
         }
 
-
         default:
             if(opcion != 0)
                 cout << "Seleccione una opcion valida!!!!" << endl;
@@ -522,25 +475,32 @@ int** rotarMatrizAntihorario180(int** MATRIZ, int n) {
 
 // Función para rotar la matriz 270 grados en sentido antihorario
 int** rotarMatrizAntihorario270(int** MATRIZ, int n) {
+    // Crear una nueva matriz para almacenar la matriz rotada
     int **matriz_rotada;
     matriz_rotada = new int*[n];
     for (int i = 0; i < n; ++i) {
         matriz_rotada[i] = new int[n];
     }
 
-    // Rotar la matriz 270 grados es equivalente a rotarla 90 grados una vez
-    // y luego reflejarla verticalmente (invierte el orden de las filas)
-    int **matriz_temporal = rotarMatrizAntihorario180(MATRIZ, n);
-    for (int fila = 0; fila < n; fila++) {
-        for (int columna = 0; columna < n; columna++) {
-            matriz_rotada[fila][columna] = matriz_temporal[n - fila - 1][columna];
+    // Aplicar tres rotaciones de 90 grados en sentido antihorario
+    for (int rotacion = 0; rotacion < 3; rotacion++) {
+        // Rotar 90 grados en sentido antihorario
+        for (int fila = 0; fila < n; fila++) {
+            for (int columna = 0; columna < n; columna++) {
+                matriz_rotada[n - columna - 1][fila] = MATRIZ[fila][columna];
+            }
+        }
+        // Actualizar la matriz original para la próxima rotación
+        for (int fila = 0; fila < n; fila++) {
+            for (int columna = 0; columna < n; columna++) {
+                MATRIZ[fila][columna] = matriz_rotada[fila][columna];
+            }
         }
     }
-    liberarMemoria(matriz_temporal, n);
 
+    // Devolver la matriz rotada
     return matriz_rotada;
 }
-
 
 
 void validarReglaK(int *datos, int cantidad) {
