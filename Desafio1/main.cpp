@@ -7,7 +7,6 @@ Juan Escalante
 
 #include <iostream>
 
-
 using namespace std;
 int** generarMatriz(int);
 void imprimirMatriz(int**, int );
@@ -17,6 +16,8 @@ int** rotarMatrizAntihorario180(int** , int );
 int** rotarMatrizAntihorario270(int** , int );
 void validarReglaK(int *datos, int cantidad);
 void generar_clave_x(int *datos, int cantidad);
+void actualizarMatrices(int** &matriz, int** &matriz_rotada90, int** &matriz_rotada180, int** &matriz_rotada270, int &n);
+
 
 int main ()
 {
@@ -238,8 +239,8 @@ int main ()
 
             int valoresX[cantidad - 1] = {0};
             valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
-            for(int i = 2, j = 0, k = 1; j < cantidad - 1; i++, j++, k++) {
 
+            for(int i = 2, j = 0, k = 1; j < cantidad - 1; i++, j++, k++) {
                 int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
 
                 // Generar la matriz y las matrices rotadas
@@ -256,28 +257,17 @@ int main ()
                 //cout << valor_inicial <<"   "<< valor_rotado_90 <<"   "<<valor_rotado_180 <<"   "<<valor_rotado_270;
 
                 int auxiliarSize = n;
-
                 // Lógica para asignar valores a valoresX
                 if (datos[i] == 1) {
                     if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
                         valoresX[k] = n;
-                        break;
                     } else {
-                        n += 2;
-                        liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
-                        liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
-                        liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
-                        liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
-                        matriz = generarMatriz(n); // Generar la nueva matriz
-                        matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
-                        matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
-                        matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
+                        actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
                         // Actualizar los valores iniciales y rotados con la nueva matriz
                         valor_inicial = matriz[dato1 + j][dato2 + j];
                         valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
                         valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
                         valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
-                        //valoresX[k] = n;
                         if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
                             valoresX[k] = n;
                             break;
@@ -288,15 +278,7 @@ int main ()
                     if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
-                        n += 2;
-                        liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
-                        liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
-                        liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
-                        liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
-                        matriz = generarMatriz(n); // Generar la nueva matriz
-                        matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
-                        matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
-                        matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
+                        actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
                         // Actualizar los valores iniciales y rotados con la nueva matriz
                         valor_inicial = matriz[dato1 + j][dato2 + j];
                         valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
@@ -305,21 +287,14 @@ int main ()
                         //valoresX[k] = n;
                         if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
                             valoresX[k] = n;
+                            break;
                     }
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
-                        n += 2;
-                        liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
-                        liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
-                        liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
-                        liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
-                        matriz = generarMatriz(n); // Generar la nueva matriz
-                        matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
-                        matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
-                        matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
+                        actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
                         // Actualizar los valores iniciales y rotados con la nueva matriz
                         valor_inicial = matriz[dato1 + j][dato2 + j];
                         valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
@@ -328,27 +303,12 @@ int main ()
                         //valoresX[k] = n;
                         if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
                             valoresX[k] = n;
+                            break;
                         }
                     }
                 }
                 else {
-                    /*// Incrementar el tamaño de la matriz en 2 unidades
-                    n += 2;
-                    // Volver a generar la matriz y las matrices rotadas con el nuevo tamaño
-                    liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
-                    liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
-                    liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
-                    liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
-                    matriz = generarMatriz(n); // Generar la nueva matriz
-                    matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
-                    matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
-                    matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
-                    // Actualizar los valores iniciales y rotados con la nueva matriz
-                    valor_inicial = matriz[dato1 + j][dato2 + j];
-                    valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
-                    valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
-                    valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
-                    valoresX[j+1] = n ; // Por ejemplo, incrementar en 2*/
+
                     cout << "no hay clave x para k";
                 }
 
@@ -456,7 +416,6 @@ int** rotarMatrizAntihorario90(int** MATRIZ, int n) {
     return matriz_rotada;
 }
 
-
 // Función para rotar la matriz 180 grados en sentido antihorario
 int** rotarMatrizAntihorario180(int** MATRIZ, int n) {
     int **matriz_rotada;
@@ -563,6 +522,24 @@ void generar_clave_x(int *datos, int cantidad) {
     cout << "X(" << mayor << "," << mayor1 <<")"  << endl;
 }
 
+void actualizarMatrices(int** &matriz, int** &matriz_rotada90, int** &matriz_rotada180, int** &matriz_rotada270, int &n) {
+    // Incrementar el tamaño de la matriz en 2 unidades
+    n += 2;
+
+    // Liberar memoria de las matrices anteriores
+    liberarMemoria(matriz, n - 2);
+    liberarMemoria(matriz_rotada90, n - 2);
+    liberarMemoria(matriz_rotada180, n - 2);
+    liberarMemoria(matriz_rotada270, n - 2);
+
+    // Generar las nuevas matrices con el nuevo tamaño
+    matriz = generarMatriz(n);
+    matriz_rotada90 = rotarMatrizAntihorario90(matriz, n);
+    matriz_rotada180 = rotarMatrizAntihorario180(matriz, n);
+    matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
+
+
+}
 
 
 
