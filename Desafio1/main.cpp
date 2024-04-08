@@ -275,17 +275,17 @@ int main ()
             if (n % 2 == 0) {
                 n = mayor + 1; // Si es par, sumar 1
             }
-            int valoresX[cantidad - 1]; // Incrementamos en uno el tamaño para incluir el valor de la matriz
+            int valoresX[cantidad - 1];
             valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
-            for(int i = 2, j = 0, k = 1; j < cantidad - 1; ++i, j++, ++k) {
+            for(int i = 2, j = 0, k = 1; j < cantidad - 1; i++, j++, k++) {
 
                 int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
 
                 // Generar la matriz y las matrices rotadas
-                int **matriz = generarMatriz(mayor);
-                int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, mayor);
-                int **matriz_rotada180 = rotarMatrizAntihorario180(matriz, mayor);
-                int **matriz_rotada270 = rotarMatrizAntihorario270(matriz, mayor);
+                int **matriz = generarMatriz(n);
+                int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, n);
+                int **matriz_rotada180 = rotarMatrizAntihorario180(matriz, n);
+                int **matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
 
                 // Obtener los valores en las posiciones iniciales
                 valor_inicial = matriz[dato1 - 1][dato2 - 1];
@@ -299,26 +299,22 @@ int main ()
                     if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
-                        valoresX[k] = n + 2;
+                        n += 2;
                     }
                 } else if (datos[i] == -1) {
                     if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
-                        valoresX[k] = n + 2;
-
+                        n += 2;
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
                         valoresX[k] = n;
-
                     } else {
-                        valoresX[k] = n;
-
+                        n += 2;
                     }
                 }
                 else {
-
                     // Incrementar el tamaño de la matriz en 2 unidades
                     n += 2;
                     // Volver a generar la matriz y las matrices rotadas con el nuevo tamaño
@@ -338,15 +334,15 @@ int main ()
                     valoresX[j+1] = n ; // Por ejemplo, incrementar en 2
                 }
                 imprimirMatriz(matriz, n);
-                                imprimirMatriz(matriz_rotada90, n);
-                                imprimirMatriz(matriz_rotada180, n);
-                                imprimirMatriz(matriz_rotada270, n);
+                imprimirMatriz(matriz_rotada90, n);
+                imprimirMatriz(matriz_rotada180, n);
+                imprimirMatriz(matriz_rotada270, n);
 
                 // Liberar la memoria de las matrices
-                liberarMemoria(matriz, mayor);
-                liberarMemoria(matriz_rotada90, mayor);
-                liberarMemoria(matriz_rotada180, mayor);
-                liberarMemoria(matriz_rotada270, mayor);
+                liberarMemoria(matriz, n);
+                liberarMemoria(matriz_rotada90, n);
+                liberarMemoria(matriz_rotada180, n);
+                liberarMemoria(matriz_rotada270, n);
             }
             // Imprimir los valores asignados a valoresX
             cout << "Valores asignados a valoresX:" << endl;
