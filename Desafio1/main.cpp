@@ -16,6 +16,7 @@ int** rotarMatrizAntihorario180(int** , int );
 int** rotarMatrizAntihorario270(int** , int );
 void validarReglaK(int *datos, int cantidad);
 void generar_clave_x(int *datos, int cantidad);
+void generarX();
 void actualizarMatrices(int** &matriz, int** &matriz_rotada90, int** &matriz_rotada180, int** &matriz_rotada270, int &n);
 
 
@@ -63,7 +64,6 @@ int main ()
             int n;
             cout << "Ingrese un numero impar para el tamaño de la matriz: ";
             cin >> n;
-
             // Verificar si el tamaño ingresado es impar, si no, pedir al usuario que ingrese nuevamente
             while (n % 2 == 0) {
                 cout << "El tamaño de la matriz debe ser un numero impar. Ingrese nuevamente: ";
@@ -137,6 +137,7 @@ int main ()
             int cantidad;
             cout << "Ingrese la cantidad de datos: ";
             cin >> cantidad;
+
             // Validar que se ingresen al menos 3 datos
             while (cantidad < 3) {
                 cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
@@ -145,13 +146,13 @@ int main ()
 
             // Crear un arreglo dinámico para almacenar los datos
             int *datos = new int[cantidad];
+
             // Pedir al usuario que ingrese los datos
             cout << "Ingrese los datos:" << endl;
             cout << "Dato 1: ";
             cin >> datos[0];
             cout << "Dato 2: ";
             cin >> datos[1];
-
             // Validar que los primeros dos datos sean positivos
             while (datos[0] <= 0 || datos[1] <= 0) {
                 cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
@@ -165,177 +166,15 @@ int main ()
                 cout << "Dato " << i + 1 << ": ";
                 cin >> datos[i];
             }
-
-
-
+            // Llamamos a la función para validar los datos ingresados
+            validarReglaK(datos, cantidad);
             // Liberar la memoria del arreglo dinámico
             delete[] datos;
 
-            return 0;
         }
         case 5:
         {
-
-            int cantidad;
-            cout << "Ingrese la cantidad de datos: ";
-            cin >> cantidad;
-            // Validar que se ingresen al menos 3 datos
-            while (cantidad < 3) {
-                cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
-                cin >> cantidad;
-            }
-            // Crear un arreglo dinámico para almacenar los datos
-            int *datos = new int[cantidad];
-            // Pedir al usuario que ingrese los datos
-            cout << "Ingrese los datos:" << endl;
-            cout << "Dato 1: ";
-            cin >> datos[0];
-            cout << "Dato 2: ";
-            cin >> datos[1];
-
-            // Validar que los primeros dos datos sean positivos
-            while (datos[0] <= 0 || datos[1] <= 0) {
-                cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
-                cin >> datos[0];
-                cout << "Ingrese nuevamente el dato 2: ";
-                cin >> datos[1];
-
-            }
-
-            // Pedir al usuario que ingrese el resto de los datos
-            for (int i = 2; i < cantidad; ++i) {
-                cout << "Dato " << i + 1 << ": ";
-                cin >> datos[i];
-
-            }
-
-            // Llamamos a la función para validar los datos ingresados
-            validarReglaK(datos, cantidad);
-
-            // Extraer los primeros dos datos
-            int dato1 = datos[0];
-            int dato2 = datos[1];
-
-
-            // Determinar cuál es el mayor
-            int mayor, n;
-
-            // Validación adicional para verificar si ambos números son 2
-            if (dato1 == 2 && dato2 == 2) {
-                mayor = dato1 + dato2 + 1; // Si ambos son 2, sumarlos y luego sumar 1
-            } else {
-                if (dato1 >= dato2) {
-                    mayor = dato1;
-                } else {
-                    mayor = dato2;
-                }
-            }
-
-            // Verificar si el mayor es par o impar
-            n = mayor;
-            if (n % 2 == 0) {
-                n = mayor + 1; // Si es par, sumar 1
-            }
-
-            int valoresX[cantidad - 1] = {0};
-            valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
-
-            for(int i = 2, j = 0, k = 1; j < cantidad - 1; i++, j++, k++) {
-                int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
-
-                // Generar la matriz y las matrices rotadas
-                int **matriz = generarMatriz(n);
-                int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, n);
-                int **matriz_rotada180 = rotarMatrizAntihorario180(matriz, n);
-                int **matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
-
-                // Obtener los valores en las posiciones iniciales
-                valor_inicial = matriz[dato1 - 1][dato2 - 1];
-                valor_rotado_90 = matriz_rotada90[dato1 - 1][dato2 - 1];
-                valor_rotado_180 = matriz_rotada180[dato1 - 1][dato2 - 1];
-                valor_rotado_270 = matriz_rotada270[dato1 - 1][dato2 - 1];
-                //cout << valor_inicial <<"   "<< valor_rotado_90 <<"   "<<valor_rotado_180 <<"   "<<valor_rotado_270;
-
-                int auxiliarSize = n;
-                // Lógica para asignar valores a valoresX
-                if (datos[i] == 1) {
-                    if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
-                        valoresX[k] = n;
-                    } else {
-                        actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
-                        // Actualizar los valores iniciales y rotados con la nueva matriz
-                        valor_inicial = matriz[dato1 + j][dato2 + j];
-                        valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
-                        valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
-                        valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
-                        if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
-                            valoresX[k] = n;
-                            break;
-                        }
-
-                    }
-                } else if (datos[i] == -1) {
-                    if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
-                        valoresX[k] = n;
-                    } else {
-                        actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
-                        // Actualizar los valores iniciales y rotados con la nueva matriz
-                        valor_inicial = matriz[dato1 + j][dato2 + j];
-                        valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
-                        valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
-                        valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
-                        //valoresX[k] = n;
-                        if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
-                            valoresX[k] = n;
-                            break;
-                    }
-                    }
-                } else if (datos[i] == 0) {
-                    if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
-                        valoresX[k] = n;
-                    } else {
-                        actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
-                        // Actualizar los valores iniciales y rotados con la nueva matriz
-                        valor_inicial = matriz[dato1 + j][dato2 + j];
-                        valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
-                        valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
-                        valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
-                        //valoresX[k] = n;
-                        if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
-                            valoresX[k] = n;
-                            break;
-                        }
-                    }
-                }
-                else {
-
-                    cout << "no hay clave x para k";
-                }
-
-
-                imprimirMatriz(matriz, auxiliarSize);
-                imprimirMatriz(matriz_rotada90, auxiliarSize);
-                imprimirMatriz(matriz_rotada180, auxiliarSize);
-                imprimirMatriz(matriz_rotada270, auxiliarSize);
-
-                // Liberar la memoria de las matrices
-                liberarMemoria(matriz, auxiliarSize);
-                liberarMemoria(matriz_rotada90, auxiliarSize);
-                liberarMemoria(matriz_rotada180, auxiliarSize);
-                liberarMemoria(matriz_rotada270, auxiliarSize);
-            }
-            // Imprimir los valores asignados a valoresX
-            cout << "Valores asignados a valoresX:" << endl;
-            for (int i = 0; i < cantidad - 1 ; i++) {
-                cout << valoresX[i] << " ";
-            }
-            cout << endl;
-
-
-            // Liberar la memoria del arreglo dinámico
-            delete[] datos;
-
-
+            generarX();
             break;
         }
 
@@ -461,7 +300,6 @@ int** rotarMatrizAntihorario270(int** MATRIZ, int n) {
     return matriz_rotada;
 }
 
-
 void validarReglaK(int *datos, int cantidad) {
     // Verificar que las primeras dos posiciones sean positivas
     if (datos[0] <= 0 || datos[1] <= 0) {
@@ -474,8 +312,8 @@ void validarReglaK(int *datos, int cantidad) {
     // Verificar que las demás posiciones sean -1, 0 o 1
     for (int i = 2; i < cantidad; ++i) {
         while (datos[i] != -1 && datos[i] != 0 && datos[i] != 1) {
-            cout << "Error: El dato ingresado en la posición " << i + 1 << " debe ser -1, 0 o 1." << endl;
-            cout << "Ingrese nuevamente el dato en la posición " << i + 1 << ": ";
+            cout << "Error: El dato ingresado en la posicion " << i + 1 << " debe ser -1, 0 o 1." << endl;
+            cout << "Ingrese nuevamente el dato en la posicion " << i + 1 << ": ";
             cin >> datos[i];
         }
     }
@@ -483,44 +321,6 @@ void validarReglaK(int *datos, int cantidad) {
     cout << "Regla K validada correctamente." << endl;
 }
 
-void generar_clave_x(int *datos, int cantidad) {
-    // Llamamos a la función para validar los datos ingresados
-    validarReglaK(datos, cantidad);
-
-    // Extraer los primeros dos datos
-    int dato1 = datos[0];
-    int dato2 = datos[1];
-    int dato3 = datos[2];
-
-    // Determinar cuál es el mayor
-    int mayor, mayor1;
-    if (dato1 >= dato2) {
-        mayor = dato1;
-    } else {
-        mayor = dato2;
-    }
-
-    // Verificar si el mayor es par o impar
-    if (mayor % 2 == 0) {
-        mayor += 1; // Si es par, sumar 1
-    }
-    int valor_inicial, valor_rotado_90;
-    int **matriz = generarMatriz(mayor);
-    int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, mayor);
-    valor_inicial = matriz[dato1-1][dato2-1];
-    valor_rotado_90 = matriz_rotada90[dato1-1][dato2-1];
-    if((valor_inicial > valor_rotado_90) && (dato3 == 1)){
-        mayor1 = mayor;
-    }
-    else
-        mayor1 = mayor+2;
-    cout << "Valor en la posicion inicial: " << valor_inicial << "------" << valor_rotado_90 << endl;
-    //generarMatriz(mayor);
-    imprimirMatriz(matriz, mayor);
-    imprimirMatriz(matriz_rotada90, mayor);
-    //liberarMemoria(matriz, mayor);
-    cout << "X(" << mayor << "," << mayor1 <<")"  << endl;
-}
 
 void actualizarMatrices(int** &matriz, int** &matriz_rotada90, int** &matriz_rotada180, int** &matriz_rotada270, int &n) {
     // Incrementar el tamaño de la matriz en 2 unidades
@@ -539,6 +339,156 @@ void actualizarMatrices(int** &matriz, int** &matriz_rotada90, int** &matriz_rot
     matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
 
 
+}
+
+void generarX() {
+    int cantidad;
+    cout << "Ingrese la cantidad de datos: ";
+    cin >> cantidad;
+
+    // Validar que se ingresen al menos 3 datos
+    while (cantidad < 3) {
+        cout << "La cantidad de datos debe ser mayor o igual a tres. Ingrese nuevamente: ";
+        cin >> cantidad;
+    }
+
+    // Crear un arreglo dinámico para almacenar los datos
+    int *datos = new int[cantidad];
+
+    // Pedir al usuario que ingrese los datos
+    cout << "Ingrese los datos:" << endl;
+    cout << "Dato 1: ";
+    cin >> datos[0];
+    cout << "Dato 2: ";
+    cin >> datos[1];
+
+    // Validar que los primeros dos datos sean positivos
+    while (datos[0] <= 0 || datos[1] <= 0) {
+        cout << "El dato 1 y 2 deben ser positivos. Ingrese nuevamente el dato 1: ";
+        cin >> datos[0];
+        cout << "Ingrese nuevamente el dato 2: ";
+        cin >> datos[1];
+    }
+
+    // Pedir al usuario que ingrese el resto de los datos
+    for (int i = 2; i < cantidad; ++i) {
+        cout << "Dato " << i + 1 << ": ";
+        cin >> datos[i];
+    }
+
+    // Llamamos a la función para validar los datos ingresados
+    validarReglaK(datos, cantidad);
+
+    // Extraer los primeros dos datos
+    int dato1 = datos[0];
+    int dato2 = datos[1];
+
+    // Determinar cuál es el mayor
+    int mayor, n;
+
+    // Validación adicional para verificar si ambos números son 2
+    if (dato1 == 2 && dato2 == 2) {
+        mayor = dato1 + dato2 + 1; // Si ambos son 2, sumarlos y luego sumar 1
+    } else {
+        if (dato1 >= dato2) {
+            mayor = dato1;
+        } else {
+            mayor = dato2;
+        }
+    }
+
+    // Verificar si el mayor es par o impar
+    n = mayor;
+    if (n % 2 == 0) {
+        n = mayor + 1; // Si es par, sumar 1
+    }
+
+    int valoresX[cantidad - 1] = {0};
+    valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
+
+    for(int i = 2, j = 0, k = 1; j < cantidad - 1; i++, j++, k++) {
+        int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
+
+        // Generar la matriz y las matrices rotadas
+        int **matriz = generarMatriz(n);
+        int **matriz_rotada90 = rotarMatrizAntihorario90(matriz, n);
+        int **matriz_rotada180 = rotarMatrizAntihorario180(matriz, n);
+        int **matriz_rotada270 = rotarMatrizAntihorario270(matriz, n);
+
+        // Obtener los valores en las posiciones iniciales
+        valor_inicial = matriz[dato1 - 1][dato2 - 1];
+        valor_rotado_90 = matriz_rotada90[dato1 - 1][dato2 - 1];
+        valor_rotado_180 = matriz_rotada180[dato1 - 1][dato2 - 1];
+        valor_rotado_270 = matriz_rotada270[dato1 - 1][dato2 - 1];
+
+        int auxiliarSize = n;
+        // Lógica para asignar valores a valoresX
+        if (datos[i] == 1) {
+            if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
+                valoresX[k] = n;
+            } else {
+                actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
+                // Actualizar los valores iniciales y rotados con la nueva matriz
+                valor_inicial = matriz[dato1 + j][dato2 + j];
+                valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
+                if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
+                    valoresX[k] = n;
+                    break;
+                }
+            }
+        } else if (datos[i] == -1) {
+            if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
+                valoresX[k] = n;
+            } else {
+                actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
+                // Actualizar los valores iniciales y rotados con la nueva matriz
+                valor_inicial = matriz[dato1 + j][dato2 + j];
+                valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
+                if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
+                    valoresX[k] = n;
+                    break;
+                }
+            }
+        } else if (datos[i] == 0) {
+            if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
+                valoresX[k] = n;
+            } else {
+                actualizarMatrices(matriz, matriz_rotada90, matriz_rotada180, matriz_rotada270, n);
+                // Actualizar los valores iniciales y rotados con la nueva matriz
+                valor_inicial = matriz[dato1 + j][dato2 + j];
+                valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
+                if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
+                    valoresX[k] = n;
+                    break;
+                }
+            }
+        }
+        else {
+            cout << "no hay clave x para k";
+        }
+
+        // Liberar la memoria de las matrices
+        liberarMemoria(matriz, auxiliarSize);
+        liberarMemoria(matriz_rotada90, auxiliarSize);
+        liberarMemoria(matriz_rotada180, auxiliarSize);
+        liberarMemoria(matriz_rotada270, auxiliarSize);
+    }
+
+    // Imprimir los valores asignados a valoresX
+    cout << "Valores asignados a valoresX:" << endl;
+    for (int i = 0; i < cantidad - 1 ; i++) {
+        cout << valoresX[i] << " ";
+    }
+    cout << endl;
+
+    // Liberar la memoria del arreglo dinámico
+    delete[] datos;
 }
 
 
