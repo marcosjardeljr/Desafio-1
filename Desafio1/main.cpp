@@ -264,10 +264,16 @@ int main ()
 
             // Determinar cuál es el mayor
             int mayor, n;
-            if (dato1 >= dato2) {
-                mayor = dato1;
+
+            // Validación adicional para verificar si ambos números son 2
+            if (dato1 == 2 && dato2 == 2) {
+                mayor = dato1 + dato2 + 1; // Si ambos son 2, sumarlos y luego sumar 1
             } else {
-                mayor = dato2;
+                if (dato1 >= dato2) {
+                    mayor = dato1;
+                } else {
+                    mayor = dato2;
+                }
             }
 
             // Verificar si el mayor es par o impar
@@ -275,7 +281,8 @@ int main ()
             if (n % 2 == 0) {
                 n = mayor + 1; // Si es par, sumar 1
             }
-            int valoresX[cantidad - 1];
+
+            int valoresX[cantidad - 1] = {0};
             valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
             for(int i = 2, j = 0, k = 1; j < cantidad - 1; i++, j++, k++) {
 
@@ -294,24 +301,44 @@ int main ()
                 valor_rotado_270 = matriz_rotada270[dato1 - 1][dato2 - 1];
                 //cout << valor_inicial <<"   "<< valor_rotado_90 <<"   "<<valor_rotado_180 <<"   "<<valor_rotado_270;
 
+                int auxiliarSize = n;
+
                 // Lógica para asignar valores a valoresX
                 if (datos[i] == 1) {
                     if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
                         valoresX[k] = n;
+                        break;
                     } else {
                         n += 2;
+                        liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
+                        liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
+                        liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
+                        liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
+                        matriz = generarMatriz(n); // Generar la nueva matriz
+                        matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
+                        matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
+                        matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
+                        // Actualizar los valores iniciales y rotados con la nueva matriz
+                        valor_inicial = matriz[dato1 + j][dato2 + j];
+                        valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                        valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                        valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
+                        //valoresX[k] = n;
+
                     }
                 } else if (datos[i] == -1) {
                     if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
                         n += 2;
+                        valoresX[k] = n;
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
                         n += 2;
+                        valoresX[k] = n;
                     }
                 }
                 else {
@@ -333,16 +360,18 @@ int main ()
                     valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
                     valoresX[j+1] = n ; // Por ejemplo, incrementar en 2
                 }
-                imprimirMatriz(matriz, n);
-                imprimirMatriz(matriz_rotada90, n);
-                imprimirMatriz(matriz_rotada180, n);
-                imprimirMatriz(matriz_rotada270, n);
+
+
+                imprimirMatriz(matriz, auxiliarSize);
+                imprimirMatriz(matriz_rotada90, auxiliarSize);
+                imprimirMatriz(matriz_rotada180, auxiliarSize);
+                imprimirMatriz(matriz_rotada270, auxiliarSize);
 
                 // Liberar la memoria de las matrices
-                liberarMemoria(matriz, n);
-                liberarMemoria(matriz_rotada90, n);
-                liberarMemoria(matriz_rotada180, n);
-                liberarMemoria(matriz_rotada270, n);
+                liberarMemoria(matriz, auxiliarSize);
+                liberarMemoria(matriz_rotada90, auxiliarSize);
+                liberarMemoria(matriz_rotada180, auxiliarSize);
+                liberarMemoria(matriz_rotada270, auxiliarSize);
             }
             // Imprimir los valores asignados a valoresX
             cout << "Valores asignados a valoresX:" << endl;
