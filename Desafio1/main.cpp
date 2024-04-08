@@ -277,7 +277,7 @@ int main ()
             }
             int valoresX[cantidad - 1]; // Incrementamos en uno el tamaño para incluir el valor de la matriz
             valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
-            for(int i = 2, j = 0; j < cantidad - 1; ++i, ++j) {
+            for(int i = 2, j = 0, k = 1; j < cantidad - 1; ++i, ++j, ++k) {
 
                 int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
 
@@ -297,21 +297,33 @@ int main ()
                 // Lógica para asignar valores a valoresX
                 if (datos[i] == 1) {
                     if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
-                        valoresX[i] = valor_inicial;
+                        valoresX[k] = n;
+                        cout<< valoresX;
+                        cout<< n;
                     } else {
-                        valoresX[i] = valor_inicial + 2; // Ajusta esto según tu lógica
+                        valoresX[k] = n + 2; // Ajusta esto según tu lógica
+                        cout<< valoresX;
+                        cout<< n;
                     }
                 } else if (datos[i] == -1) {
                     if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
-                        valoresX[i] = valor_inicial;
+                        valoresX[k] = n;
+                        cout<< valoresX;
+                        cout<< n;
                     } else {
-                        valoresX[i] = valor_inicial + 2; // Ajusta esto según tu lógica
+                        valoresX[k] = n + 2; // Ajusta esto según tu lógica
+                        cout<< valoresX;
+                        cout<< n;
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
-                        valoresX[i] = valor_inicial;
+                        valoresX[k] = n;
+                        cout<< valoresX;
+                        cout<< n;
                     } else {
-                        valoresX[i] = valor_inicial; // Otra acción si son iguales según tu lógica
+                        valoresX[i] = n; // Otra acción si son iguales según tu lógica
+                        cout<< valoresX;
+                        cout<< n;
                     }
                 } else {
                     // Incrementar el tamaño de la matriz en 2 unidades
