@@ -277,7 +277,7 @@ int main ()
             }
             int valoresX[cantidad - 1]; // Incrementamos en uno el tamaño para incluir el valor de la matriz
             valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
-            for(int i = 2, j = 0, k = 1; j < cantidad - 1; ++i, ++j, ++k) {
+            for(int i = 2, j = 0, k = 1; j < cantidad - 1; ++i, j++, ++k) {
 
                 int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
 
@@ -298,33 +298,25 @@ int main ()
                 if (datos[i] == 1) {
                     if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
                         valoresX[k] = n;
-                        cout<< valoresX;
-                        cout<< n;
                     } else {
-                        valoresX[k] = n + 2; // Ajusta esto según tu lógica
+                        valoresX[k] = n + 2;
                     }
                 } else if (datos[i] == -1) {
                     if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
                         valoresX[k] = n;
-                        cout<< valoresX;
-                        cout<< n;
                     } else {
-                        valoresX[k] = n + 2; // Ajusta esto según tu lógica
-                        cout<< valoresX;
-                        cout<< n;
+                        valoresX[k] = n + 2;
+
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
                         valoresX[k] = n;
-                        cout<< valoresX;
-                        cout<< n;
+
                     } else {
-                        valoresX[i] = n; // Otra acción si son iguales según tu lógica
-                        cout<< valoresX;
-                        cout<< n;
+                        valoresX[k] = n;
+
                     }
                 }
-
                 else {
 
                     // Incrementar el tamaño de la matriz en 2 unidades
@@ -339,17 +331,16 @@ int main ()
                     matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
                     matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
                     // Actualizar los valores iniciales y rotados con la nueva matriz
-                    valor_inicial = matriz[dato1 + 1][dato2 + 1];
-                    valor_rotado_90 = matriz_rotada90[dato1 + 1][dato2 + 1];
-                    valor_rotado_180 = matriz_rotada180[dato1 + 1][dato2 + 1];
-                    valor_rotado_270 = matriz_rotada270[dato1 + 1][dato2 + 1];
-                    // Asignar el valor según la nueva lógica (puedes ajustar esto según tus necesidades)
+                    valor_inicial = matriz[dato1 + j][dato2 + j];
+                    valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                    valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                    valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
                     valoresX[j+1] = n ; // Por ejemplo, incrementar en 2
                 }
                 imprimirMatriz(matriz, n);
-                imprimirMatriz(matriz_rotada90, n);
-                imprimirMatriz(matriz_rotada180, n);
-                imprimirMatriz(matriz_rotada270, n);
+                                imprimirMatriz(matriz_rotada90, n);
+                                imprimirMatriz(matriz_rotada180, n);
+                                imprimirMatriz(matriz_rotada270, n);
 
                 // Liberar la memoria de las matrices
                 liberarMemoria(matriz, mayor);
