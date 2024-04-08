@@ -324,6 +324,10 @@ int main ()
                         valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
                         valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
                         //valoresX[k] = n;
+                        if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
+                            valoresX[k] = n;
+                            break;
+                        }
 
                     }
                 } else if (datos[i] == -1) {
@@ -345,6 +349,10 @@ int main ()
                         valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
                         valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
                         //valoresX[k] = n;
+                        if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
+                            valoresX[k] = n;
+                            break;
+                        }
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
@@ -365,10 +373,14 @@ int main ()
                         valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
                         valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
                         //valoresX[k] = n;
+                        if (valor_inicial > valor_rotado_90 || valor_inicial > valor_rotado_180 || valor_inicial > valor_rotado_270) {
+                            valoresX[k] = n;
+                            break;
+                        }
                     }
                 }
                 else {
-                    // Incrementar el tamaño de la matriz en 2 unidades
+                    /*// Incrementar el tamaño de la matriz en 2 unidades
                     n += 2;
                     // Volver a generar la matriz y las matrices rotadas con el nuevo tamaño
                     liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
@@ -384,7 +396,8 @@ int main ()
                     valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
                     valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
                     valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
-                    valoresX[j+1] = n ; // Por ejemplo, incrementar en 2
+                    valoresX[j+1] = n ; // Por ejemplo, incrementar en 2*/
+                    cout << "no hay clave x para k";
                 }
 
 
