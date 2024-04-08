@@ -331,14 +331,40 @@ int main ()
                         valoresX[k] = n;
                     } else {
                         n += 2;
-                        valoresX[k] = n;
+                        liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
+                        liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
+                        liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
+                        liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
+                        matriz = generarMatriz(n); // Generar la nueva matriz
+                        matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
+                        matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
+                        matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
+                        // Actualizar los valores iniciales y rotados con la nueva matriz
+                        valor_inicial = matriz[dato1 + j][dato2 + j];
+                        valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                        valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                        valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
+                        //valoresX[k] = n;
                     }
                 } else if (datos[i] == 0) {
                     if (valor_inicial == valor_rotado_90 || valor_inicial == valor_rotado_180 || valor_inicial == valor_rotado_270) {
                         valoresX[k] = n;
                     } else {
                         n += 2;
-                        valoresX[k] = n;
+                        liberarMemoria(matriz, n - 2); // Liberar memoria de la matriz anterior
+                        liberarMemoria(matriz_rotada90, n - 2); // Liberar memoria de la matriz rotada 90
+                        liberarMemoria(matriz_rotada180, n - 2); // Liberar memoria de la matriz rotada 180
+                        liberarMemoria(matriz_rotada270, n - 2); // Liberar memoria de la matriz rotada 270
+                        matriz = generarMatriz(n); // Generar la nueva matriz
+                        matriz_rotada90 = rotarMatrizAntihorario90(matriz, n); // Generar la nueva matriz rotada 90
+                        matriz_rotada180 = rotarMatrizAntihorario180(matriz, n); // Generar la nueva matriz rotada 180
+                        matriz_rotada270 = rotarMatrizAntihorario270(matriz, n); // Generar la nueva matriz rotada 270
+                        // Actualizar los valores iniciales y rotados con la nueva matriz
+                        valor_inicial = matriz[dato1 + j][dato2 + j];
+                        valor_rotado_90 = matriz_rotada90[dato1 + j][dato2 + j];
+                        valor_rotado_180 = matriz_rotada180[dato1 + j][dato2 + j];
+                        valor_rotado_270 = matriz_rotada270[dato1 + j][dato2 + j];
+                        //valoresX[k] = n;
                     }
                 }
                 else {
