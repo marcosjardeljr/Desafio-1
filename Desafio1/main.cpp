@@ -275,9 +275,9 @@ int main ()
             if (n % 2 == 0) {
                 n = mayor + 1; // Si es par, sumar 1
             }
-            int valoresX[cantidad - 2]; // Incrementamos en uno el tamaño para incluir el valor de la matriz
+            int valoresX[cantidad - 1]; // Incrementamos en uno el tamaño para incluir el valor de la matriz
             valoresX[0] = n; // Guardamos el tamaño de la matriz en la primera posición de valoresX
-            for(int i = 2, j = 0; j < cantidad - 2; ++i, ++j) {
+            for(int i = 2, j = 0; j < cantidad - 1; ++i, ++j) {
 
                 int valor_inicial, valor_rotado_90, valor_rotado_180, valor_rotado_270;
 
@@ -331,7 +331,7 @@ int main ()
                     valor_rotado_180 = matriz_rotada180[dato1 + 1][dato2 + 1];
                     valor_rotado_270 = matriz_rotada270[dato1 + 1][dato2 + 1];
                     // Asignar el valor según la nueva lógica (puedes ajustar esto según tus necesidades)
-                    valoresX[i] = valor_inicial + 2; // Por ejemplo, incrementar en 2
+                    valoresX[j+1] = n ; // Por ejemplo, incrementar en 2
                 }
 
                 // Liberar la memoria de las matrices
@@ -342,7 +342,7 @@ int main ()
             }
             // Imprimir los valores asignados a valoresX
             cout << "Valores asignados a valoresX:" << endl;
-            for (int i = 2; i < cantidad ; i++) {
+            for (int i = 0; i < cantidad - 1 ; i++) {
                 cout << valoresX[i] << " ";
             }
             cout << endl;
