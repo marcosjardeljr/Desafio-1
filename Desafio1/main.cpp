@@ -302,8 +302,6 @@ int main ()
                         cout<< n;
                     } else {
                         valoresX[k] = n + 2; // Ajusta esto según tu lógica
-                        cout<< valoresX;
-                        cout<< n;
                     }
                 } else if (datos[i] == -1) {
                     if (valor_inicial < valor_rotado_90 || valor_inicial < valor_rotado_180 || valor_inicial < valor_rotado_270) {
@@ -325,7 +323,10 @@ int main ()
                         cout<< valoresX;
                         cout<< n;
                     }
-                } else {
+                }
+
+                else {
+
                     // Incrementar el tamaño de la matriz en 2 unidades
                     n += 2;
                     // Volver a generar la matriz y las matrices rotadas con el nuevo tamaño
@@ -345,6 +346,10 @@ int main ()
                     // Asignar el valor según la nueva lógica (puedes ajustar esto según tus necesidades)
                     valoresX[j+1] = n ; // Por ejemplo, incrementar en 2
                 }
+                imprimirMatriz(matriz, n);
+                imprimirMatriz(matriz_rotada90, n);
+                imprimirMatriz(matriz_rotada180, n);
+                imprimirMatriz(matriz_rotada270, n);
 
                 // Liberar la memoria de las matrices
                 liberarMemoria(matriz, mayor);
