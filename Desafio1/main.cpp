@@ -2,7 +2,7 @@
 Desafio 1
 Presentado y desarrollado por:
 Marcos Jardel Murillo Hernández - C.C.1017238240
-Juan David Escalante fonseca - c.c 1054091027
+Juan Escalante
 */
 
 #include <iostream>
@@ -489,4 +489,3 @@ void generarX() {
     // Liberar la memoria del arreglo dinámico
     delete[] datos;
 }
-
