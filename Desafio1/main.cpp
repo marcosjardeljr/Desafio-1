@@ -2,7 +2,7 @@
 Desafio 1
 Presentado y desarrollado por:
 Marcos Jardel Murillo Hernández - C.C.1017238240
-Juan Escalante
+Juan David Escalante fonseca - c.c 1054091027
 */
 
 #include <iostream>
@@ -15,7 +15,6 @@ int** rotarMatrizAntihorario90(int** , int );
 int** rotarMatrizAntihorario180(int** , int );
 int** rotarMatrizAntihorario270(int** , int );
 void validarReglaK(int *datos, int cantidad);
-void generar_clave_x(int *datos, int cantidad);
 void generarX();
 void actualizarMatrices(int** &matriz, int** &matriz_rotada90, int** &matriz_rotada180, int** &matriz_rotada270, int &n);
 
@@ -32,7 +31,7 @@ int main ()
         cout << "2.  Rotacion de estructuras de datos" << endl;
         cout << "3.  Configurar cerraduras en cantidad y tamanio" << endl;
         cout << "4.  Validar regla de apertura sobre la cerradura" << endl;
-        cout << "5.  Generar configuracion para generar regla" << endl;
+        cout << "5.  Generar configuracion para generar regla X" << endl;
         cout << "0. Para SALIR!" << endl;
         cin >> opcion;
         switch(opcion)
@@ -45,7 +44,7 @@ int main ()
 
             // Verificar si el tamaño ingresado es impar, si no, pedir al usuario que ingrese nuevamente
             while (n % 2 == 0) {
-                cout << "El tamaño de la matriz debe ser un numero impar. Ingrese nuevamente: ";
+                cout << "El tamano de la matriz debe ser un numero impar. Ingrese nuevamente: ";
                 cin >> n;
             }
 
@@ -62,11 +61,11 @@ int main ()
         case 2:
         {
             int n;
-            cout << "Ingrese un numero impar para el tamaño de la matriz: ";
+            cout << "Ingrese un numero impar para el tamano de la matriz: ";
             cin >> n;
             // Verificar si el tamaño ingresado es impar, si no, pedir al usuario que ingrese nuevamente
             while (n % 2 == 0) {
-                cout << "El tamaño de la matriz debe ser un numero impar. Ingrese nuevamente: ";
+                cout << "El tamano de la matriz debe ser un numero impar. Ingrese nuevamente: ";
                 cin >> n;
             }
 
@@ -108,10 +107,10 @@ int main ()
 
             for (int i = 0; i < cantidad_cerraduras; ++i) {
                 int tam;
-                cout << "Ingrese el tamaño impar para la cerradura " << i + 1 << ": ";
+                cout << "Ingrese el tamano impar para la cerradura " << i + 1 << ": ";
                 cin >> tam;
                 while (tam % 2 == 0) {
-                    cout << "El tamaño debe ser impar. Ingrese nuevamente: ";
+                    cout << "El tamano debe ser impar. Ingrese nuevamente: ";
                     cin >> tam;
                 }
 
@@ -481,15 +480,13 @@ void generarX() {
     }
 
     // Imprimir los valores asignados a valoresX
-    cout << "Valores asignados a valoresX:" << endl;
+    cout << "Valores asignados a valoresX: (";
     for (int i = 0; i < cantidad - 1 ; i++) {
         cout << valoresX[i] << " ";
     }
-    cout << endl;
+    cout <<")" << endl;
 
     // Liberar la memoria del arreglo dinámico
     delete[] datos;
 }
-
-
 
