@@ -1,8 +1,8 @@
 /*
 Desafio 1
 Presentado y desarrollado por:
-Marcos Jardel Murillo Hernández - C.C.1017238240
-Juan Escalante
+Marcos Jardel Murillo Hernández - C.C. 1017238240
+Juan David Escalante Fonseca - C.C. 1054091027
 */
 
 #include <iostream>
